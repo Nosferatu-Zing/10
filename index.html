@@ -20,61 +20,100 @@
     /* Top Bar */
     header { background: var(--primary); color: white; padding: 1rem 2rem; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; }
     header h1 { font-size: 1.25rem; font-weight: 600; }
-    .nav-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .nav-actions { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
     .nav-links a { color: #bfdbfe; text-decoration: none; font-size: 0.9rem; font-weight: 500; }
     .nav-links a:hover { color: white; text-decoration: underline; }
 
-    /* ปุ่ม Export โน้ต */
-    .btn-export {
-      background: #10b981;
-      color: white;
+    /* Action Buttons */
+    .btn {
       border: none;
-      padding: 0.45rem 0.9rem;
+      padding: 0.45rem 0.85rem;
       border-radius: 6px;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.3rem;
       transition: background 0.2s;
     }
+    .btn-toggle { background: #334155; color: white; }
+    .btn-toggle:hover { background: #1e293b; }
+    .btn-export { background: #10b981; color: white; }
     .btn-export:hover { background: #059669; }
 
     .container { max-width: 1200px; margin: 2rem auto; padding: 0 1.5rem; }
 
     /* Dashboard Index Cards */
-    .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+    .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
     .dash-card { background: var(--card-bg); border-radius: 8px; border: 1px solid var(--border); padding: 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
     .dash-card h2 { font-size: 1.1rem; color: var(--primary); margin-bottom: 0.75rem; border-bottom: 2px solid var(--border); padding-bottom: 0.4rem; }
     .quick-list { list-style: none; }
     .quick-list li { margin-bottom: 0.5rem; font-size: 0.9rem; display: flex; justify-content: space-between; align-items: baseline; }
-    .quick-list a { color: var(--secondary); text-decoration: none; font-weight: 600; }
+    .quick-list a { color: var(--secondary); text-decoration: none; font-weight: 600; cursor: pointer; }
     .quick-list a:hover { text-decoration: underline; }
     .quick-list span { color: var(--muted); font-size: 0.8rem; text-align: right; }
 
-    /* Section Cards */
-    .section-title { font-size: 1.4rem; color: var(--primary); margin: 2rem 0 1rem; border-left: 4px solid var(--primary); padding-left: 0.75rem; }
-    .law-card { background: var(--card-bg); border-radius: 8px; border: 1px solid var(--border); margin-bottom: 1.5rem; display: grid; grid-template-columns: 1.2fr 1fr; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-    @media (max-width: 850px) { .law-card { grid-template-columns: 1fr; } }
+    .section-title { font-size: 1.3rem; color: var(--primary); margin: 2rem 0 1rem; border-left: 4px solid var(--primary); padding-left: 0.75rem; }
+
+    /* Collapsible Card (<details>) */
+    details.law-card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-bottom: 0.75rem;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+      transition: all 0.2s ease;
+      overflow: hidden;
+    }
+    details.law-card[open] {
+      border-color: var(--secondary);
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.08);
+      margin-bottom: 1.25rem;
+    }
+
+    summary.law-summary {
+      padding: 0.9rem 1.25rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      font-weight: 600;
+      user-select: none;
+      list-style: none;
+    }
+    summary.law-summary::-webkit-details-marker { display: none; }
+    summary.law-summary:hover { background: #f8fafc; }
     
-    .law-body { padding: 1.5rem; border-right: 1px solid var(--border); }
-    .law-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
-    .law-title { font-size: 1.15rem; font-weight: 700; color: var(--primary); }
-    .law-text { background: #f1f5f9; padding: 1rem; border-radius: 6px; font-size: 0.95rem; border-left: 3px solid var(--secondary); margin-bottom: 1rem; }
-    .law-elements { font-size: 0.88rem; margin-bottom: 1rem; }
-    .law-elements ul { padding-left: 1.2rem; margin-top: 0.4rem; }
+    .summary-left { display: flex; align-items: center; gap: 0.75rem; }
+    .summary-title { color: var(--primary); font-size: 1.05rem; }
+    .summary-desc { color: var(--muted); font-size: 0.88rem; font-weight: normal; }
+    .summary-icon { color: var(--secondary); font-size: 0.8rem; transition: transform 0.2s; }
+    details[open] summary .summary-icon { transform: rotate(90deg); }
+
+    /* Inner Card Layout */
+    .card-content {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      border-top: 1px solid var(--border);
+    }
+    @media (max-width: 850px) { .card-content { grid-template-columns: 1fr; } }
+
+    .law-body { padding: 1.25rem; border-right: 1px solid var(--border); }
+    .law-text { background: #f1f5f9; padding: 0.9rem; border-radius: 6px; font-size: 0.92rem; border-left: 3px solid var(--secondary); margin-bottom: 0.85rem; }
+    .law-elements { font-size: 0.86rem; margin-bottom: 0.85rem; }
     
     .cross-ref { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; font-size: 0.8rem; }
-    .badge { background: #e0e7ff; color: #3730a3; padding: 2px 8px; border-radius: 4px; text-decoration: none; font-weight: 600; }
+    .badge { background: #e0e7ff; color: #3730a3; padding: 2px 8px; border-radius: 4px; text-decoration: none; font-weight: 600; cursor: pointer; }
     .badge:hover { background: #c7d2fe; }
 
-    /* Notes Canvas Area */
-    .law-notes { padding: 1.5rem; background: #fffdfa; display: flex; flex-direction: column; }
-    .notes-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; font-size: 0.85rem; font-weight: 600; color: #b45309; }
-    .notes-input { width: 100%; flex-grow: 1; min-height: 140px; border: 1px dashed #cbd5e1; border-radius: 6px; padding: 0.75rem; font-family: inherit; font-size: 0.85rem; background: transparent; resize: vertical; outline: none; }
+    /* Notes Area */
+    .law-notes { padding: 1.25rem; background: #fffdfa; display: flex; flex-direction: column; }
+    .notes-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; font-size: 0.83rem; font-weight: 600; color: #b45309; }
+    .notes-input { width: 100%; flex-grow: 1; min-height: 120px; border: 1px dashed #cbd5e1; border-radius: 6px; padding: 0.65rem; font-family: inherit; font-size: 0.85rem; background: transparent; resize: vertical; outline: none; }
     .notes-input:focus { border-color: var(--secondary); background: white; }
-    .save-status { font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; text-align: right; }
+    .save-status { font-size: 0.72rem; color: var(--muted); margin-top: 0.25rem; text-align: right; }
   </style>
 </head>
 <body>
@@ -88,7 +127,8 @@
       <a href="#part2">หมวด 2</a>
       <a href="#part3">หมวด 3</a>
     </nav>
-    <button class="btn-export" onclick="exportNotes()">📥 ดาวน์โหลดบันทึก (.txt)</button>
+    <button class="btn btn-toggle" onclick="toggleAllCards()">📂 ขยาย/พับทั้งหมด</button>
+    <button class="btn btn-export" onclick="exportNotes()">📥 ดาวน์โหลดบันทึก (.txt)</button>
   </div>
 </header>
 
@@ -96,47 +136,47 @@
 
   <!-- DASHBOARD INDEX -->
   <section id="dashboard" style="margin-bottom: 2rem;">
-    <h2 style="font-size: 1.4rem; color: var(--primary); margin-bottom: 1rem;">🧭 แผงดัชนีภาพรวม (Dashboard Matrix)</h2>
+    <h2 style="font-size: 1.3rem; color: var(--primary); margin-bottom: 1rem;">🧭 แผงดัชนีภาพรวม (คลิกเพื่อเปิดมาตรา)</h2>
     <div class="dashboard-grid">
       
       <div class="dash-card">
-        <h2>หมวด 1: บทเบ็ดเสร็จทั่วไป (1)</h2>
+        <h2>หมวด 1: ทั่วไป (ม.657 - 663)</h2>
         <ul class="quick-list">
-          <li><a href="#sec657">มาตรา 657</a> <span>นิยาม/ส่งมอบอารักขา</span></li>
-          <li><a href="#sec658">มาตรา 658</a> <span>บำเหน็จค่าฝากทรัพย์</span></li>
-          <li><a href="#sec659">มาตรา 659</a> <span>ความระมัดระวัง 3 ระดับ</span></li>
-          <li><a href="#sec660">มาตรา 660</a> <span>ห้ามใช้ทรัพย์/ฝากช่วง</span></li>
-          <li><a href="#sec661">มาตรา 661</a> <span>บุคคลภายนอกอ้างสิทธิ</span></li>
-          <li><a href="#sec662">มาตรา 662</a> <span>กำหนดเวลาคืนทรัพย์</span></li>
-          <li><a href="#sec663">มาตรา 663</a> <span>ผู้ฝากเรียกคืนก่อนกำหนด</span></li>
+          <li><a onclick="openAndScroll('sec657')">มาตรา 657</a> <span>นิยาม/ส่งมอบอารักขา</span></li>
+          <li><a onclick="openAndScroll('sec658')">มาตรา 658</a> <span>บำเหน็จค่าฝากทรัพย์</span></li>
+          <li><a onclick="openAndScroll('sec659')">มาตรา 659</a> <span>ความระมัดระวัง 3 ระดับ</span></li>
+          <li><a onclick="openAndScroll('sec660')">มาตรา 660</a> <span>ห้ามใช้ทรัพย์/ฝากช่วง</span></li>
+          <li><a onclick="openAndScroll('sec661')">มาตรา 661</a> <span>บุคคลภายนอกอ้างสิทธิ</span></li>
+          <li><a onclick="openAndScroll('sec662')">มาตรา 662</a> <span>กำหนดเวลาคืนทรัพย์</span></li>
+          <li><a onclick="openAndScroll('sec663')">มาตรา 663</a> <span>ผู้ฝากเรียกคืนก่อนกำหนด</span></li>
         </ul>
       </div>
 
       <div class="dash-card">
-        <h2>หมวด 1: บทเบ็ดเสร็จทั่วไป (2)</h2>
+        <h2>หมวด 1: ทั่วไป (ม.664 - 669)</h2>
         <ul class="quick-list">
-          <li><a href="#sec664">มาตรา 664</a> <span>คืนทรัพย์เมื่อไร้กำหนดเวลา</span></li>
-          <li><a href="#sec665">มาตรา 665</a> <span>สถานที่/บุคคลรับส่งคืน</span></li>
-          <li><a href="#sec666">มาตรา 666</a> <span>การคืนดอกผลแห่งทรัพย์</span></li>
-          <li><a href="#sec667">มาตรา 667</a> <span>สิทธิยึดหน่วงของผู้รับฝาก</span></li>
-          <li><a href="#sec668">มาตรา 668</a> <span>ค่าใช้จ่ายรักษาทรัพย์</span></li>
-          <li><a href="#sec669">มาตรา 669</a> <span>อายุความฟ้องร้อง 6 เดือน</span></li>
+          <li><a onclick="openAndScroll('sec664')">มาตรา 664</a> <span>คืนทรัพย์เมื่อไร้กำหนด</span></li>
+          <li><a onclick="openAndScroll('sec665')">มาตรา 665</a> <span>สถานที่/บุคคลรับส่งคืน</span></li>
+          <li><a onclick="openAndScroll('sec666')">มาตรา 666</a> <span>การคืนดอกผลแห่งทรัพย์</span></li>
+          <li><a onclick="openAndScroll('sec667')">มาตรา 667</a> <span>สิทธิยึดหน่วงของผู้รับฝาก</span></li>
+          <li><a onclick="openAndScroll('sec668')">มาตรา 668</a> <span>ค่าใช้จ่ายรักษาทรัพย์</span></li>
+          <li><a onclick="openAndScroll('sec669')">มาตรา 669</a> <span>อายุความฟ้องร้อง 6 เดือน</span></li>
         </ul>
       </div>
 
       <div class="dash-card">
         <h2>หมวด 2 & 3: ฝากเงินและโรงแรม</h2>
         <ul class="quick-list">
-          <li><a href="#sec670">มาตรา 670</a> <span>บทสันนิษฐานการฝากเงิน</span></li>
-          <li><a href="#sec671">มาตรา 671</a> <span>การนำเงินฝากออกใช้</span></li>
-          <li><a href="#sec672">มาตรา 672</a> <span>โอนกรรมสิทธิ์/คืนเงิน</span></li>
-          <li><a href="#sec673">มาตรา 673</a> <span>สถานที่คืนเงินฝาก</span></li>
-          <li><a href="#sec674">มาตรา 674</a> <span>ความรับผิดของโรงแรม</span></li>
-          <li><a href="#sec675">มาตรา 675</a> <span>เพดานรับผิด/ทรัพย์มีค่า</span></li>
-          <li><a href="#sec676">มาตรา 676</a> <span>ข้อยกเว้นความรับผิด</span></li>
-          <li><a href="#sec677">มาตรา 677</a> <span>ป้ายปลดหนี้เป็นโมฆะ</span></li>
-          <li><a href="#sec678">มาตรา 678</a> <span>สิทธิยึดหน่วงของโรงแรม</span></li>
-          <li><a href="#sec679">มาตรา 679</a> <span>อายุความโรงแรม 6 เดือน</span></li>
+          <li><a onclick="openAndScroll('sec670')">มาตรา 670</a> <span>บทสันนิษฐานการฝากเงิน</span></li>
+          <li><a onclick="openAndScroll('sec671')">มาตรา 671</a> <span>การนำเงินฝากออกใช้</span></li>
+          <li><a onclick="openAndScroll('sec672')">มาตรา 672</a> <span>โอนกรรมสิทธิ์/คืนเงิน</span></li>
+          <li><a onclick="openAndScroll('sec673')">มาตรา 673</a> <span>สถานที่คืนเงินฝาก</span></li>
+          <li><a onclick="openAndScroll('sec674')">มาตรา 674</a> <span>ความรับผิดของโรงแรม</span></li>
+          <li><a onclick="openAndScroll('sec675')">มาตรา 675</a> <span>เพดานรับผิด/ทรัพย์มีค่า</span></li>
+          <li><a onclick="openAndScroll('sec676')">มาตรา 676</a> <span>ข้อยกเว้นความรับผิด</span></li>
+          <li><a onclick="openAndScroll('sec677')">มาตรา 677</a> <span>ป้ายปลดหนี้เป็นโมฆะ</span></li>
+          <li><a onclick="openAndScroll('sec678')">มาตรา 678</a> <span>สิทธิยึดหน่วงของโรงแรม</span></li>
+          <li><a onclick="openAndScroll('sec679')">มาตรา 679</a> <span>อายุความโรงแรม 6 เดือน</span></li>
         </ul>
       </div>
 
@@ -146,333 +186,517 @@
   <!-- ==================== หมวด 1 ==================== -->
   <h2 class="section-title" id="part1">หมวด 1: บทเบ็ดเสร็จทั่วไป (มาตรา 657 - 669)</h2>
 
-  <div class="law-card" id="sec657">
-    <div class="law-body">
-      <div class="law-header"><span class="law-title">มาตรา 657</span><a href="#dashboard" class="badge">🔝 แดชบอร์ด</a></div>
-      <div class="law-text">"อันว่าฝากทรัพย์นั้น คือสัญญาซึ่งบุคคลคนหนึ่ง เรียกว่า ผู้ฝาก ส่งมอบทรัพย์สินให้แก่บุคคลอีกคนหนึ่ง เรียกว่า ผู้รับฝาก และผู้รับฝากตกลงว่าจะเก็บรักษาทรัพย์สินนั้นไว้ในอารักขาแห่งตน แล้วจะคืนให้"</div>
-      <div class="law-elements"><strong>หัวใจสำคัญ:</strong> สัญญาบริบูรณ์เมื่อมีการส่งมอบทรัพย์สิน และต้องมีเจตนาควบคุมดูแลทรัพย์ในอารักขา</div>
-      <div class="cross-ref"><span>เชื่อมโยง:</span><a href="#sec658" class="badge">ม.658 บำเหน็จ</a><a href="#sec659" class="badge">ม.659 ความระมัดระวัง</a></div>
+  <details class="law-card" id="sec657">
+    <summary class="law-summary">
+      <div class="summary-left">
+        <span class="summary-icon">▶</span>
+        <span class="summary-title">มาตรา 657</span>
+        <span class="summary-desc">— บทนิยามสัญญาฝากทรัพย์ / การส่งมอบอารักขา</span>
+      </div>
+    </summary>
+    <div class="card-content">
+      <div class="law-body">
+        <div class="law-text">"อันว่าฝากทรัพย์นั้น คือสัญญาซึ่งบุคคลคนหนึ่ง เรียกว่า ผู้ฝาก ส่งมอบทรัพย์สินให้แก่บุคคลอีกคนหนึ่ง เรียกว่า ผู้รับฝาก และผู้รับฝากตกลงว่าจะเก็บรักษาทรัพย์สินนั้นไว้ในอารักขาแห่งตน แล้วจะคืนให้"</div>
+        <div class="law-elements"><strong>หัวใจสำคัญ:</strong> สัญญาบริบูรณ์เมื่อมีการส่งมอบทรัพย์สิน และมีเจตนาควบคุมดูแลทรัพย์ในอารักขา</div>
+        <div class="cross-ref"><span>เชื่อมโยง:</span> <a onclick="openAndScroll('sec658')" class="badge">ม.658 บำเหน็จ</a> <a onclick="openAndScroll('sec659')" class="badge">ม.659 ความระมัดระวัง</a></div>
+      </div>
+      <div class="law-notes">
+        <div class="notes-header">📝 บันทึกประเด็น (ม.657)</div>
+        <textarea class="notes-input" id="note-657" placeholder="พิมพ์ข้อสังเกตหรือแนวฎีกาที่นี่..."></textarea>
+        <div class="save-status" id="status-657">พร้อมบันทึก</div>
+      </div>
     </div>
-    <div class="law-notes">
-      <div class="notes-header">📝 บันทึกประเด็น / สรุปย่อ (ม.657)</div>
-      <textarea class="notes-input" id="note-657" placeholder="พิมพ์ข้อสังเกตหรือแนวฎีกาที่นี่..."></textarea>
-      <div class="save-status" id="status-657">พร้อมบันทึก</div>
-    </div>
-  </div>
+  </details>
 
-  <div class="law-card" id="sec658">
-    <div class="law-body">
-      <div class="law-header"><span class="law-title">มาตรา 658</span><a href="#dashboard" class="badge">🔝 แดชบอร์ด</a></div>
-      <div class="law-text">"ถ้าไม่มีข้อตกลงในสัญญาว่าจะพึงมีบำเหน็จค่าฝากทรัพย์ไซร้ ท่านว่าผู้รับฝากจะเรียกเอาบำเหน็จได้ก็แต่โดยพฤติการณ์อันพึงคาดหมายได้ว่าย่อมจะมีบำเหน็จค่าฝากทรัพย์เท่านั้น เช่นตามจารีตประเพณีเป็นต้น"</div>
-      <div class="law-elements"><strong>หัวใจสำคัญ:</strong> สันนิษฐานว่าฝากฟรี เว้นแต่ตกลงกันไว้ชัดแจ้ง หรือมีพฤติการณ์/จารีตการค้าคาดหมายได้</div>
-      <div class="cross-ref"><span>เชื่อมโยง:</span><a href="#sec659" class="badge">ม.659 เกณฑ์ชี้วัด</a><a href="#sec667" class="badge">ม.667 สิทธิยึดหน่วง</a></div>
+  <details class="law-card" id="sec658">
+    <summary class="law-summary">
+      <div class="summary-left">
+        <span class="summary-icon">▶</span>
+        <span class="summary-title">มาตรา 658</span>
+        <span class="summary-desc">— บำเหน็จค่าฝากทรัพย์</span>
+      </div>
+    </summary>
+    <div class="card-content">
+      <div class="law-body">
+        <div class="law-text">"ถ้าไม่มีข้อตกลงในสัญญาว่าจะพึงมีบำเหน็จค่าฝากทรัพย์ไซร้ ท่านว่าผู้รับฝากจะเรียกเอาบำเหน็จได้ก็แต่โดยพฤติการณ์อันพึงคาดหมายได้ว่าย่อมจะมีบำเหน็จค่าฝากทรัพย์เท่านั้น เช่นตามจารีตประเพณีเป็นต้น"</div>
+        <div class="law-elements"><strong>หัวใจสำคัญ:</strong> สันนิษฐานว่าฝากฟรี เว้นแต่ตกลงกันไว้ชัดแจ้ง หรือมีพฤติการณ์/จารีตการค้าคาดหมายได้</div>
+        <div class="cross-ref"><span>เชื่อมโยง:</span> <a onclick="openAndScroll('sec659')" class="badge">ม.659 เกณฑ์ชี้วัด</a> <a onclick="openAndScroll('sec667')" class="badge">ม.667 ยึดหน่วง</a></div>
+      </div>
+      <div class="law-notes">
+        <div class="notes-header">📝 บันทึกประเด็น (ม.658)</div>
+        <textarea class="notes-input" id="note-658" placeholder="พิมพ์ข้อสังเกต..."></textarea>
+        <div class="save-status" id="status-658">พร้อมบันทึก</div>
+      </div>
     </div>
-    <div class="law-notes">
-      <div class="notes-header">📝 บันทึกประเด็น / สรุปย่อ (ม.658)</div>
-      <textarea class="notes-input" id="note-658" placeholder="พิมพ์ข้อสังเกต..."></textarea>
-      <div class="save-status" id="status-658">พร้อมบันทึก</div>
-    </div>
-  </div>
+  </details>
 
-  <div class="law-card" id="sec659">
-    <div class="law-body">
-      <div class="law-header"><span class="law-title">มาตรา 659</span><a href="#dashboard" class="badge">🔝 แดชบอร์ด</a></div>
-      <div class="law-text">"ถ้าการรับฝากทรัพย์เป็นการทำให้เปล่าปราศจากบำเหน็จไซร้ ท่านว่าผู้รับฝากจำต้องใช้ความระมัดระวังสงวนทรัพย์สินซึ่งฝากนั้น เหมือนเช่นเคยประพฤติในกิจการของตนเอง (ว.1)<br><br>ถ้าการรับฝากทรัพย์นั้นมีบำเหน็จค่าฝาก ท่านว่าผู้รับฝากจำต้องใช้ความระมัดระวังและใช้ฝีมือเพื่อสงวนทรัพย์สินนั้น เหมือนเช่นวิญญูชนจะพึงประพฤติโดยปรกติในพฤติการณ์เป็นอย่างนั้น ทั้งนี้ ย่อมรวมทั้งการใช้ฝีมืออันพิเศษเฉพาะการในที่จะพึงใช้เช่นนั้นด้วย (ว.2)<br><br>ถ้าและผู้รับฝากเป็นผู้มีวิชาชีพเฉพาะกิจการค้าขายหรือการช่างกล หรืออย่างอื่นทำนองดั่งนั้น ท่านว่าผู้รับฝากจำต้องใช้ความระมัดระวังและใช้ฝีมือเท่าที่เป็นธรรมดาจะต้องใช้และควรจะต้องใช้ในวิชาชีพหรือการค้าขายหรือการช่างกลอย่างนั้น (ว.3)"</div>
-      <div class="law-elements"><strong>เกณฑ์ 3 ระดับ:</strong> 1. ดูแลเหมือนของตน 2. วิญญูชน 3. มาตรฐานมืออาชีพ</div>
-      <div class="cross-ref"><span>เชื่อมโยง:</span><a href="#sec660" class="badge">ม.660 ข้อห้าม</a><a href="#sec674" class="badge">ม.674 โรงแรม</a></div>
+  <details class="law-card" id="sec659">
+    <summary class="law-summary">
+      <div class="summary-left">
+        <span class="summary-icon">▶</span>
+        <span class="summary-title">มาตรา 659</span>
+        <span class="summary-desc">— ระดับความระมัดระวัง 3 ระดับ</span>
+      </div>
+    </summary>
+    <div class="card-content">
+      <div class="law-body">
+        <div class="law-text">"ถ้าการรับฝากทรัพย์เป็นการทำให้เปล่าปราศจากบำเหน็จไซร้ ท่านว่าผู้รับฝากจำต้องใช้ความระมัดระวังสงวนทรัพย์สินซึ่งฝากนั้น เหมือนเช่นเคยประพฤติในกิจการของตนเอง (ว.1)<br><br>ถ้าการรับฝากทรัพย์นั้นมีบำเหน็จค่าฝาก ท่านว่าผู้รับฝากจำต้องใช้ความระมัดระวังและใช้ฝีมือเพื่อสงวนทรัพย์สินนั้น เหมือนเช่นวิญญูชนจะพึงประพฤติโดยปรกติในพฤติการณ์เป็นอย่างนั้น ทั้งนี้ ย่อมรวมทั้งการใช้ฝีมืออันพิเศษเฉพาะการในที่จะพึงใช้เช่นนั้นด้วย (ว.2)<br><br>ถ้าและผู้รับฝากเป็นผู้มีวิชาชีพเฉพาะกิจการค้าขายหรือการช่างกล หรืออย่างอื่นทำนองดั่งนั้น ท่านว่าผู้รับฝากจำต้องใช้ความระมัดระวังและใช้ฝีมือเท่าที่เป็นธรรมดาจะต้องใช้และควรจะต้องใช้ในวิชาชีพหรือการค้าขายหรือการช่างกลอย่างนั้น (ว.3)"</div>
+        <div class="law-elements"><strong>เกณฑ์ 3 ระดับ:</strong> 1. ดูแลเหมือนของตน 2. วิญญูชน 3. มาตรฐานมืออาชีพ</div>
+        <div class="cross-ref"><span>เชื่อมโยง:</span> <a onclick="openAndScroll('sec660')" class="badge">ม.660 ข้อห้าม</a> <a onclick="openAndScroll('sec674')" class="badge">ม.674 โรงแรม</a></div>
+      </div>
+      <div class="law-notes">
+        <div class="notes-header">📝 บันทึกประเด็น (ม.659)</div>
+        <textarea class="notes-input" id="note-659" placeholder="พิมพ์ข้อสังเกต..."></textarea>
+        <div class="save-status" id="status-659">พร้อมบันทึก</div>
+      </div>
     </div>
-    <div class="law-notes">
-      <div class="notes-header">📝 บันทึกประเด็น / สรุปย่อ (ม.659)</div>
-      <textarea class="notes-input" id="note-659" placeholder="พิมพ์ข้อสังเกต..."></textarea>
-      <div class="save-status" id="status-659">พร้อมบันทึก</div>
-    </div>
-  </div>
+  </details>
 
-  <div class="law-card" id="sec660">
-    <div class="law-body">
-      <div class="law-header"><span class="law-title">มาตรา 660</span><a href="#dashboard" class="badge">🔝 แดชบอร์ด</a></div>
-      <div class="law-text">"ถ้าผู้ฝากมิได้อนุญาต และผู้รับฝากเอาทรัพย์สินซึ่งฝากนั้นออกใช้สอยเอง หรือเอาไปให้บุคคลภายนอกใช้สอย หรือให้บุคคลภายนอกเก็บรักษาไซร้ ท่านว่าผู้รับฝากจะต้องรับผิดเมื่อทรัพย์สินซึ่งฝากนั้นสูญหายหรือบุบสลายไปอย่างหนึ่งอย่างใด แม้ถึงจะเป็นเพราะเหตุสุดวิสัย เว้นแต่จะพิสูจน์ได้ว่า ถึงอย่างไร ๆ ทรัพย์สินนั้นก็คงจะต้องสูญหายหรือบุบสลายอยู่นั่นเอง"</div>
-      <div class="law-elements"><strong>ผล:</strong> ฝ่าฝืนนำทรัพย์ไปใช้หรือฝากช่วง ต้องรับผิดเด็ดขาดแม้เกิดจากเหตุสุดวิสัย</div>
-      <div class="cross-ref"><span>เชื่อมโยง:</span><a href="#sec659" class="badge">ม.659</a></div>
+  <details class="law-card" id="sec660">
+    <summary class="law-summary">
+      <div class="summary-left">
+        <span class="summary-icon">▶</span>
+        <span class="summary-title">มาตรา 660</span>
+        <span class="summary-desc">— ข้อห้ามการใช้ทรัพย์และการฝากช่วง</span>
+      </div>
+    </summary>
+    <div class="card-content">
+      <div class="law-body">
+        <div class="law-text">"ถ้าผู้ฝากมิได้อนุญาต และผู้รับฝากเอาทรัพย์สินซึ่งฝากนั้นออกใช้สอยเอง หรือเอาไปให้บุคคลภายนอกใช้สอย หรือให้บุคคลภายนอกเก็บรักษาไซร้ ท่านว่าผู้รับฝากจะต้องรับผิดเมื่อทรัพย์สินซึ่งฝากนั้นสูญหายหรือบุบสลายไปอย่างหนึ่งอย่างใด แม้ถึงจะเป็นเพราะเหตุสุดวิสัย เว้นแต่จะพิสูจน์ได้ว่า ถึงอย่างไร ๆ ทรัพย์สินนั้นก็คงจะต้องสูญหายหรือบุบสลายอยู่นั่นเอง"</div>
+        <div class="law-elements"><strong>ผล:</strong> ฝ่าฝืนนำทรัพย์ไปใช้หรือฝากช่วง ต้องรับผิดเด็ดขาดแม้เกิดจากเหตุสุดวิสัย</div>
+        <div class="cross-ref"><span>เชื่อมโยง:</span> <a onclick="openAndScroll('sec659')" class="badge">ม.659</a></div>
+      </div>
+      <div class="law-notes">
+        <div class="notes-header">📝 บันทึก (ม.660)</div>
+        <textarea class="notes-input" id="note-660"></textarea>
+        <div class="save-status" id="status-660">พร้อมบันทึก</div>
+      </div>
     </div>
-    <div class="law-notes">
-      <div class="notes-header">📝 บันทึก (ม.660)</div>
-      <textarea class="notes-input" id="note-660"></textarea>
-      <div class="save-status" id="status-660">พร้อมบันทึก</div>
-    </div>
-  </div>
+  </details>
 
-  <div class="law-card" id="sec661">
-    <div class="law-body">
-      <div class="law-header"><span class="law-title">มาตรา 661</span><a href="#dashboard" class="badge">🔝 แดชบอร์ด</a></div>
-      <div class="law-text">"ถ้าบุคคลภายนอกอ้างว่ามีสิทธิเหนือทรัพย์สินซึ่งฝาก และเข้าฟ้องเรียกเอาทรัพย์สินนั้นก็ดี หรือยึดทรัพย์สินนั้นก็ดี ผู้รับฝากจำต้องบอกกล่าวแก่ผู้ฝากโดยพลัน"</div>
-      <div class="law-elements"><strong>หน้าที่:</strong> ผู้รับฝากมีหน้าที่ต้องแจ้งเตือนผู้ฝากทันทีเมื่อมีบุคคลภายนอกมาฟ้องหรือยึดทรัพย์</div>
-      <div class="cross-ref"><span>เชื่อมโยง:</span><a href="#sec665" class="badge">ม.665 สิทธิคืน</a></div>
+  <details class="law-card" id="sec661">
+    <summary class="law-summary">
+      <div class="summary-left">
+        <span class="summary-icon">▶</span>
+        <span class="summary-title">มาตรา 661</span>
+        <span class="summary-desc">— บุคคลภายนอกอ้างสิทธิเหนือทรัพย์ที่ฝาก</span>
+      </div>
+    </summary>
+    <div class="card-content">
+      <div class="law-body">
+        <div class="law-text">"ถ้าบุคคลภายนอกอ้างว่ามีสิทธิเหนือทรัพย์สินซึ่งฝาก และเข้าฟ้องเรียกเอาทรัพย์สินนั้นก็ดี หรือยึดทรัพย์สินนั้นก็ดี ผู้รับฝากจำต้องบอกกล่าวแก่ผู้ฝากโดยพลัน"</div>
+        <div class="law-elements"><strong>หน้าที่:</strong> ต้องแจ้งเตือนผู้ฝากทันทีเมื่อมีบุคคลภายนอกมาฟ้องหรือยึดทรัพย์</div>
+        <div class="cross-ref"><span>เชื่อมโยง:</span> <a onclick="openAndScroll('sec665')" class="badge">ม.665 การส่งคืน</a></div>
+      </div>
+      <div class="law-notes">
+        <div class="notes-header">📝 บันทึก (ม.661)</div>
+        <textarea class="notes-input" id="note-661"></textarea>
+        <div class="save-status" id="status-661">พร้อมบันทึก</div>
+      </div>
     </div>
-    <div class="law-notes">
-      <div class="notes-header">📝 บันทึก (ม.661)</div>
-      <textarea class="notes-input" id="note-661"></textarea>
-      <div class="save-status" id="status-661">พร้อมบันทึก</div>
-    </div>
-  </div>
+  </details>
 
-  <div class="law-card" id="sec662">
-    <div class="law-body">
-      <div class="law-header"><span class="law-title">มาตรา 662</span><a href="#dashboard" class="badge">🔝 แดชบอร์ด</a></div>
-      <div class="law-text">"ถ้าได้กำหนดเวลากันไว้ว่าจะพึงคืนทรัพย์สินซึ่งฝากนั้นเมื่อใด ท่านสันนิษฐานไว้ก่อนว่ากำหนดเวลานั้นได้ตั้งขึ้นเพื่อเป็นคุณแก่ผู้ฝากฝ่ายเดียว ดั่งนั้น ผู้รับฝากหาอาจจะเรียกให้ผู้ฝากรับคืนทรัพย์สินไปก่อนถึงเวลากำหนดนั้นได้ไม่ เว้นแต่จะมีเหตุจำเป็นอันมิอาจก้าวล่วงได้"</div>
-      <div class="law-elements"><strong>หลัก:</strong> ผู้รับฝากห้ามบังคับคืนก่อนครบกำหนด เว้นแต่มีเหตุจำเป็นสุดวิสัย</div>
-      <div class="cross-ref"><span>เชื่อมโยง:</span><a href="#sec663" class="badge">ม.663 สิทธิผู้ฝาก</a></div>
+  <details class="law-card" id="sec662">
+    <summary class="law-summary">
+      <div class="summary-left">
+        <span class="summary-icon">▶</span>
+        <span class="summary-title">มาตรา 662</span>
+        <span class="summary-desc">— กำหนดเวลาคืนทรัพย์สิน</span>
+      </div>
+    </summary>
+    <div class="card-content">
+      <div class="law-body">
+        <div class="law-text">"ถ้าได้กำหนดเวลากันไว้ว่าจะพึงคืนทรัพย์สินซึ่งฝากนั้นเมื่อใด ท่านสันนิษฐานไว้ก่อนว่ากำหนดเวลานั้นได้ตั้งขึ้นเพื่อเป็นคุณแก่ผู้ฝากฝ่ายเดียว ดั่งนั้น ผู้รับฝากหาอาจจะเรียกให้ผู้ฝากรับคืนทรัพย์สินไปก่อนถึงเวลากำหนดนั้นได้ไม่ เว้นแต่จะมีเหตุจำเป็นอันมิอาจก้าวล่วงได้"</div>
+        <div class="law-elements"><strong>หลัก:</strong> ผู้รับฝากห้ามบังคับคืนก่อนครบกำหนด เว้นแต่มีเหตุจำเป็นสุดวิสัย</div>
+        <div class="cross-ref"><span>เชื่อมโยง:</span> <a onclick="openAndScroll('sec663')" class="badge">ม.663</a></div>
+      </div>
+      <div class="law-notes">
+        <div class="notes-header">📝 บันทึก (ม.662)</div>
+        <textarea class="notes-input" id="note-662"></textarea>
+        <div class="save-status" id="status-662">พร้อมบันทึก</div>
+      </div>
     </div>
-    <div class="law-notes">
-      <div class="notes-header">📝 บันทึก (ม.662)</div>
-      <textarea class="notes-input" id="note-662"></textarea>
-      <div class="save-status" id="status-662">พร้อมบันทึก</div>
-    </div>
-  </div>
+  </details>
 
-  <div class="law-card" id="sec663">
-    <div class="law-body">
-      <div class="law-header"><span class="law-title">มาตรา 663</span><a href="#dashboard" class="badge">🔝 แดชบอร์ด</a></div>
-      <div class="law-text">"ถึงแม้ว่าคู่สัญญาจะได้กำหนดเวลาไว้ว่าจะพึงคืนทรัพย์สินซึ่งฝากนั้นเมื่อใดก็ดี ถ้าผู้ฝากจะเรียกคืนในเวลาใด ๆ ผู้รับฝากก็ต้องคืนให้"</div>
-      <div class="law-elements"><strong>สิทธิเด็ดขาด:</strong> ผู้ฝากขอรับทรัพย์คืนได้เสมอทุกเวลา แม้ยังไม่ถึงกำหนด</div>
-      <div class="cross-ref"><span>เชื่อมโยง:</span><a href="#sec662" class="badge">ม.662 กำหนดเวลา</a><a href="#sec668" class="badge">ม.668 ค่าใช้จ่าย</a></div>
+  <details class="law-card" id="sec663">
+    <summary class="law-summary">
+      <div class="summary-left">
+        <span class="summary-icon">▶</span>
+        <span class="summary-title">มาตรา 663</span>
+        <span class="summary-desc">— สิทธิของผู้ฝากในการเรียกคืนก่อนกำหนด</span>
+      </div>
+    </summary>
+    <div class="card-content">
+      <div class="law-body">
+        <div class="law-text">"ถึงแม้ว่าคู่สัญญาจะได้กำหนดเวลาไว้ว่าจะพึงคืนทรัพย์สินซึ่งฝากนั้นเมื่อใดก็ดี ถ้าผู้ฝากจะเรียกคืนในเวลาใด ๆ ผู้รับฝากก็ต้องคืนให้"</div>
+        <div class="law-elements"><strong>สิทธิเด็ดขาด:</strong> ผู้ฝากขอรับทรัพย์คืนได้เสมอทุกเวลา แม้ยังไม่ถึงกำหนด</div>
+        <div class="cross-ref"><span>เชื่อมโยง:</span> <a onclick="openAndScroll('sec668')" class="badge">ม.668 ค่าใช้จ่าย</a></div>
+      </div>
+      <div class="law-notes">
+        <div class="notes-header">📝 บันทึก (ม.663)</div>
+        <textarea class="notes-input" id="note-663"></textarea>
+        <div class="save-status" id="status-663">พร้อมบันทึก</div>
+      </div>
     </div>
-    <div class="law-notes">
-      <div class="notes-header">📝 บันทึก (ม.663)</div>
-      <textarea class="notes-input" id="note-663"></textarea>
-      <div class="save-status" id="status-663">พร้อมบันทึก</div>
-    </div>
-  </div>
+  </details>
 
-  <div class="law-card" id="sec664">
-    <div class="law-body">
-      <div class="law-header"><span class="law-title">มาตรา 664</span><a href="#dashboard" class="badge">🔝 แดชบอร์ด</a></div>
-      <div class="law-text">"ถ้าคู่สัญญาไม่ได้กำหนดเวลาไว้ว่าจะพึงคืนทรัพย์สินซึ่งฝากนั้นเมื่อใดไซร้ ผู้รับฝากย่อมคืนทรัพย์สินนั้นได้ทุกเมื่อ"</div>
-      <div class="law-elements"><strong>หลัก:</strong> กรณีไม่กำหนดเวลา ผู้รับฝากบอกเลิกและคืนของได้ตลอดเวลา</div>
-      <div class="cross-ref"><span>เชื่อมโยง:</span><a href="#sec662" class="badge">ม.662</a></div>
+  <details class="law-card" id="sec664">
+    <summary class="law-summary">
+      <div class="summary-left">
+        <span class="summary-icon">▶</span>
+        <span class="summary-title">มาตรา 664</span>
+        <span class="summary-desc">— การคืนทรัพย์สินเมื่อไม่ได้กำหนดเวลา</span>
+      </div>
+    </summary>
+    <div class="card-content">
+      <div class="law-body">
+        <div class="law-text">"ถ้าคู่สัญญาไม่ได้กำหนดเวลาไว้ว่าจะพึงคืนทรัพย์สินซึ่งฝากนั้นเมื่อใดไซร้ ผู้รับฝากย่อมคืนทรัพย์สินนั้นได้ทุกเมื่อ"</div>
+        <div class="law-elements"><strong>หลัก:</strong> กรณีไม่กำหนดเวลา ผู้รับฝากบอกเลิกและส่งคืนของได้ตลอดเวลา</div>
+        <div class="cross-ref"><span>เชื่อมโยง:</span> <a onclick="openAndScroll('sec662')" class="badge">ม.662</a></div>
+      </div>
+      <div class="law-notes">
+        <div class="notes-header">📝 บันทึก (ม.664)</div>
+        <textarea class="notes-input" id="note-664"></textarea>
+        <div class="save-status" id="status-664">พร้อมบันทึก</div>
+      </div>
     </div>
-    <div class="law-notes">
-      <div class="notes-header">📝 บันทึก (ม.664)</div>
-      <textarea class="notes-input" id="note-664"></textarea>
-      <div class="save-status" id="status-664">พร้อมบันทึก</div>
-    </div>
-  </div>
+  </details>
 
-  <div class="law-card" id="sec665">
-    <div class="law-body">
-      <div class="law-header"><span class="law-title">มาตรา 665</span><a href="#dashboard" class="badge">🔝 แดชบอร์ด</a></div>
-      <div class="law-text">"ผู้รับฝากจำต้องส่งคืนทรัพย์สินซึ่งรับฝากไว้นั้น ณ สถานที่ซึ่งได้ส่งมอบแก่ตนเพื่อเก็บรักษา เว้นแต่คู่สัญญาจะได้ตกลงกันไว้เป็นอย่างอื่น แต่ถ้าผู้รับฝากได้เปลี่ยนสถานที่เก็บรักษาทรัพย์สินโดยชอบด้วยอำนาจตามกฎหมายไซร้ การส่งคืนจะพึงกระทำ ณ สถานที่ซึ่งทรัพย์สินนั้นอยู่ในเวลานี้ก็ได้<br><br>อนึ่ง การส่งคืนนั้นจะพึงกระทำแก่ผู้ฝาก หรือบุคคลที่ผู้ฝากได้ระบุไว้ให้เป็นผู้รับคืนก็ได้"</div>
-      <div class="law-elements"><strong>สถานที่และตัวบุคคล:</strong> ส่งคืน ณ สถานที่ที่รับมอบไว้ และต้องคืนให้ถูกตัวบุคคล</div>
-      <div class="cross-ref"><span>เชื่อมโยง:</span><a href="#sec673" class="badge">เทียบ ม.673 คืนเงิน</a></div>
+  <details class="law-card" id="sec665">
+    <summary class="law-summary">
+      <div class="summary-left">
+        <span class="summary-icon">▶</span>
+        <span class="summary-title">มาตรา 665</span>
+        <span class="summary-desc">— สถานที่และบุคคลผู้รับการส่งคืนทรัพย์สิน</span>
+      </div>
+    </summary>
+    <div class="card-content">
+      <div class="law-body">
+        <div class="law-text">"ผู้รับฝากจำต้องส่งคืนทรัพย์สินซึ่งรับฝากไว้นั้น ณ สถานที่ซึ่งได้ส่งมอบแก่ตนเพื่อเก็บรักษา เว้นแต่คู่สัญญาจะได้ตกลงกันไว้เป็นอย่างอื่น แต่ถ้าผู้รับฝากได้เปลี่ยนสถานที่เก็บรักษาทรัพย์สินโดยชอบด้วยอำนาจตามกฎหมายไซร้ การส่งคืนจะพึงกระทำ ณ สถานที่ซึ่งทรัพย์สินนั้นอยู่ในเวลานี้ก็ได้<br><br>อนึ่ง การส่งคืนนั้นจะพึงกระทำแก่ผู้ฝาก หรือบุคคลที่ผู้ฝากได้ระบุไว้ให้เป็นผู้รับคืนก็ได้"</div>
+        <div class="law-elements"><strong>สถานที่และตัวบุคคล:</strong> ส่งคืน ณ สถานที่ที่รับมอบไว้ และต้องคืนให้ถูกตัวบุคคล</div>
+        <div class="cross-ref"><span>เชื่อมโยง:</span> <a onclick="openAndScroll('sec673')" class="badge">เทียบ ม.673 คืนเงิน</a></div>
+      </div>
+      <div class="law-notes">
+        <div class="notes-header">📝 บันทึก (ม.665)</div>
+        <textarea class="notes-input" id="note-665"></textarea>
+        <div class="save-status" id="status-665">พร้อมบันทึก</div>
+      </div>
     </div>
-    <div class="law-notes">
-      <div class="notes-header">📝 บันทึก (ม.665)</div>
-      <textarea class="notes-input" id="note-665"></textarea>
-      <div class="save-status" id="status-665">พร้อมบันทึก</div>
-    </div>
-  </div>
+  </details>
 
-  <div class="law-card" id="sec666">
-    <div class="law-body">
-      <div class="law-header"><span class="law-title">มาตรา 666</span><a href="#dashboard" class="badge">🔝 แดชบอร์ด</a></div>
-      <div class="law-text">"ดอกผลอันเกิดแต่ทรัพย์สินซึ่งฝากนั้น ผู้รับฝากจำต้องส่งมอบให้แก่ผู้ฝากพร้อมกับทรัพย์สินนั้น"</div>
-      <div class="law-elements"><strong>ดอกผล:</strong> ดอกผลธรรมดาและดอกผลนิตินัยตกเป็นของผู้ฝากเสมอ</div>
-      <div class="cross-ref"><span>เชื่อมโยง:</span><a href="#sec670" class="badge">ม.670 ฝากเงิน</a></div>
+  <details class="law-card" id="sec666">
+    <summary class="law-summary">
+      <div class="summary-left">
+        <span class="summary-icon">▶</span>
+        <span class="summary-title">มาตรา 666</span>
+        <span class="summary-desc">— การส่งมอบดอกผลแห่งทรัพย์สินที่ฝาก</span>
+      </div>
+    </summary>
+    <div class="card-content">
+      <div class="law-body">
+        <div class="law-text">"ดอกผลอันเกิดแต่ทรัพย์สินซึ่งฝากนั้น ผู้รับฝากจำต้องส่งมอบให้แก่ผู้ฝากพร้อมกับทรัพย์สินนั้น"</div>
+        <div class="law-elements"><strong>ดอกผล:</strong> ดอกผลธรรมดาและดอกผลนิตินัยตกเป็นของผู้ฝากเสมอ</div>
+        <div class="cross-ref"><span>เชื่อมโยง:</span> <a onclick="openAndScroll('sec670')" class="badge">ม.670 ฝากเงิน</a></div>
+      </div>
+      <div class="law-notes">
+        <div class="notes-header">📝 บันทึก (ม.666)</div>
+        <textarea class="notes-input" id="note-666"></textarea>
+        <div class="save-status" id="status-666">พร้อมบันทึก</div>
+      </div>
     </div>
-    <div class="law-notes">
-      <div class="notes-header">📝 บันทึก (ม.666)</div>
-      <textarea class="notes-input" id="note-666"></textarea>
-      <div class="save-status" id="status-666">พร้อมบันทึก</div>
-    </div>
-  </div>
+  </details>
 
-  <div class="law-card" id="sec667">
-    <div class="law-body">
-      <div class="law-header"><span class="law-title">มาตรา 667</span><a href="#dashboard" class="badge">🔝 แดชบอร์ด</a></div>
-      <div class="law-text">"ผู้รับฝากชอบที่จะยึดหน่วงทรัพย์สินซึ่งฝากนั้นไว้ได้ จนกว่าจะได้รับเงินบรรดาที่ค้างชำระแก่ตนเกี่ยวด้วยการฝากทรัพย์นั้น"</div>
-      <div class="law-elements"><strong>สิทธิยึดหน่วง:</strong> ยึดของไว้ได้เพื่อเป็นประกันการชำระค่าบำเหน็จหรือค่าใช้จ่าย</div>
-      <div class="cross-ref"><span>เชื่อมโยง:</span><a href="#sec658" class="badge">ม.658 บำเหน็จ</a><a href="#sec678" class="badge">ม.678 ยึดหน่วงโรงแรม</a></div>
+  <details class="law-card" id="sec667">
+    <summary class="law-summary">
+      <div class="summary-left">
+        <span class="summary-icon">▶</span>
+        <span class="summary-title">มาตรา 667</span>
+        <span class="summary-desc">— สิทธิยึดหน่วงทรัพย์สินของผู้รับฝาก</span>
+      </div>
+    </summary>
+    <div class="card-content">
+      <div class="law-body">
+        <div class="law-text">"ผู้รับฝากชอบที่จะยึดหน่วงทรัพย์สินซึ่งฝากนั้นไว้ได้ จนกว่าจะได้รับเงินบรรดาที่ค้างชำระแก่ตนเกี่ยวด้วยการฝากทรัพย์นั้น"</div>
+        <div class="law-elements"><strong>สิทธิยึดหน่วง:</strong> ยึดของไว้ได้เพื่อเป็นประกันการชำระค่าบำเหน็จหรือค่าใช้จ่าย</div>
+        <div class="cross-ref"><span>เชื่อมโยง:</span> <a onclick="openAndScroll('sec658')" class="badge">ม.658</a> <a onclick="openAndScroll('sec678')" class="badge">ม.678 ยึดหน่วงโรงแรม</a></div>
+      </div>
+      <div class="law-notes">
+        <div class="notes-header">📝 บันทึก (ม.667)</div>
+        <textarea class="notes-input" id="note-667"></textarea>
+        <div class="save-status" id="status-667">พร้อมบันทึก</div>
+      </div>
     </div>
-    <div class="law-notes">
-      <div class="notes-header">📝 บันทึก (ม.667)</div>
-      <textarea class="notes-input" id="note-667"></textarea>
-      <div class="save-status" id="status-667">พร้อมบันทึก</div>
-    </div>
-  </div>
+  </details>
 
-  <div class="law-card" id="sec668">
-    <div class="law-body">
-      <div class="law-header"><span class="law-title">มาตรา 668</span><a href="#dashboard" class="badge">🔝 แดชบอร์ด</a></div>
-      <div class="law-text">"ค่าใช้จ่ายอันควรแก่การบำรุงรักษาทรัพย์สินซึ่งฝากนั้น ผู้ฝากจำต้องชดใช้ให้แก่ผู้รับฝาก เว้นแต่จะได้ตกลงกันไว้เป็นอย่างอื่นในสัญญาฝากทรัพย์"</div>
-      <div class="law-elements"><strong>ค่าใช้จ่ายจำเป็น:</strong> ผู้ฝากต้องรับผิดชอบค่าใช้จ่ายในการบำรุงรักษาทรัพย์</div>
-      <div class="cross-ref"><span>เชื่อมโยง:</span><a href="#sec667" class="badge">ม.667 ยึดหน่วง</a></div>
+  <details class="law-card" id="sec668">
+    <summary class="law-summary">
+      <div class="summary-left">
+        <span class="summary-icon">▶</span>
+        <span class="summary-title">มาตรา 668</span>
+        <span class="summary-desc">— ค่าใช้จ่ายในการบำรุงรักษาทรัพย์สิน</span>
+      </div>
+    </summary>
+    <div class="card-content">
+      <div class="law-body">
+        <div class="law-text">"ค่าใช้จ่ายอันควรแก่การบำรุงรักษาทรัพย์สินซึ่งฝากนั้น ผู้ฝากจำต้องชดใช้ให้แก่ผู้รับฝาก เว้นแต่จะได้ตกลงกันไว้เป็นอย่างอื่นในสัญญาฝากทรัพย์"</div>
+        <div class="law-elements"><strong>ค่าใช้จ่ายจำเป็น:</strong> ผู้ฝากต้องรับผิดชอบค่าใช้จ่ายในการบำรุงรักษาทรัพย์</div>
+        <div class="cross-ref"><span>เชื่อมโยง:</span> <a onclick="openAndScroll('sec667')" class="badge">ม.667 สิทธิยึดหน่วง</a></div>
+      </div>
+      <div class="law-notes">
+        <div class="notes-header">📝 บันทึก (ม.668)</div>
+        <textarea class="notes-input" id="note-668"></textarea>
+        <div class="save-status" id="status-668">พร้อมบันทึก</div>
+      </div>
     </div>
-    <div class="law-notes">
-      <div class="notes-header">📝 บันทึก (ม.668)</div>
-      <textarea class="notes-input" id="note-668"></textarea>
-      <div class="save-status" id="status-668">พร้อมบันทึก</div>
-    </div>
-  </div>
+  </details>
 
-  <div class="law-card" id="sec669">
-    <div class="law-body">
-      <div class="law-header"><span class="law-title">มาตรา 669</span><a href="#dashboard" class="badge">🔝 แดชบอร์ด</a></div>
-      <div class="law-text">"ในข้อความรับผิดเพื่อใช้เงินบำเหน็จค่าฝากทรัพย์ก็ดี ใช้เงินค่าใช้จ่ายก็ดี หรือใช้ค่าสินไหมทดแทนเกี่ยวแก่การฝากทรัพย์ก็ดี ท่านห้ามมิให้ฟ้องเมื่อพ้นกำหนดหกเดือนนับแต่วันสิ้นสัญญา"</div>
-      <div class="law-elements"><strong>อายุความ:</strong> กำหนด 6 เดือนนับแต่วันสิ้นสัญญา (เป็นอายุความพิเศษที่สั้นมาก)</div>
-      <div class="cross-ref"><span>เชื่อมโยง:</span><a href="#sec679" class="badge">ม.679 อายุความโรงแรม</a></div>
+  <details class="law-card" id="sec669">
+    <summary class="law-summary">
+      <div class="summary-left">
+        <span class="summary-icon">▶</span>
+        <span class="summary-title">มาตรา 669</span>
+        <span class="summary-desc">— อายุความฟ้องร้องทั่วไป (6 เดือน)</span>
+      </div>
+    </summary>
+    <div class="card-content">
+      <div class="law-body">
+        <div class="law-text">"ในข้อความรับผิดเพื่อใช้เงินบำเหน็จค่าฝากทรัพย์ก็ดี ใช้เงินค่าใช้จ่ายก็ดี หรือใช้ค่าสินไหมทดแทนเกี่ยวแก่การฝากทรัพย์ก็ดี ท่านห้ามมิให้ฟ้องเมื่อพ้นกำหนดหกเดือนนับแต่วันสิ้นสัญญา"</div>
+        <div class="law-elements"><strong>อายุความ:</strong> กำหนด 6 เดือนนับแต่วันสิ้นสัญญา (อายุความพิเศษที่สั้นมาก)</div>
+        <div class="cross-ref"><span>เชื่อมโยง:</span> <a onclick="openAndScroll('sec679')" class="badge">ม.679 อายุความโรงแรม</a></div>
+      </div>
+      <div class="law-notes">
+        <div class="notes-header">📝 บันทึก (ม.669)</div>
+        <textarea class="notes-input" id="note-669"></textarea>
+        <div class="save-status" id="status-669">พร้อมบันทึก</div>
+      </div>
     </div>
-    <div class="law-notes">
-      <div class="notes-header">📝 บันทึก (ม.669)</div>
-      <textarea class="notes-input" id="note-669"></textarea>
-      <div class="save-status" id="status-669">พร้อมบันทึก</div>
-    </div>
-  </div>
+  </details>
 
   <!-- ==================== หมวด 2 ==================== -->
   <h2 class="section-title" id="part2">หมวด 2: วิธีเฉพาะการฝากเงิน (มาตรา 670 - 673)</h2>
 
-  <div class="law-card" id="sec670">
-    <div class="law-body">
-      <div class="law-header"><span class="law-title">มาตรา 670</span><a href="#dashboard" class="badge">🔝 แดชบอร์ด</a></div>
-      <div class="law-text">"ผู้รับฝากเงินไม่จำต้องส่งคืนเป็นเงินตราอันเดียวกับที่ฝากมา แต่จำต้องคืนเงินให้ครบจำนวนเท่านั้น"</div>
-      <div class="law-elements"><strong>หลักการฝากเงิน:</strong> สันนิษฐานว่าไม่ต้องคืนธนบัตรใบเดิม แต่ต้องคืนครบตามยอดเงิน</div>
-      <div class="cross-ref"><span>เชื่อมโยง:</span><a href="#sec672" class="badge">ม.672 กรรมสิทธิ์</a></div>
+  <details class="law-card" id="sec670">
+    <summary class="law-summary">
+      <div class="summary-left">
+        <span class="summary-icon">▶</span>
+        <span class="summary-title">มาตรา 670</span>
+        <span class="summary-desc">— บทสันนิษฐานการฝากเงิน</span>
+      </div>
+    </summary>
+    <div class="card-content">
+      <div class="law-body">
+        <div class="law-text">"ผู้รับฝากเงินไม่จำต้องส่งคืนเป็นเงินตราอันเดียวกับที่ฝากมา แต่จำต้องคืนเงินให้ครบจำนวนเท่านั้น"</div>
+        <div class="law-elements"><strong>หลักการฝากเงิน:</strong> สันนิษฐานว่าไม่ต้องคืนธนบัตรใบเดิม แต่ต้องคืนครบตามยอดเงิน</div>
+        <div class="cross-ref"><span>เชื่อมโยง:</span> <a onclick="openAndScroll('sec672')" class="badge">ม.672 กรรมสิทธิ์</a></div>
+      </div>
+      <div class="law-notes">
+        <div class="notes-header">📝 บันทึก (ม.670)</div>
+        <textarea class="notes-input" id="note-670"></textarea>
+        <div class="save-status" id="status-670">พร้อมบันทึก</div>
+      </div>
     </div>
-    <div class="law-notes">
-      <div class="notes-header">📝 บันทึก (ม.670)</div>
-      <textarea class="notes-input" id="note-670"></textarea>
-      <div class="save-status" id="status-670">พร้อมบันทึก</div>
-    </div>
-  </div>
+  </details>
 
-  <div class="law-card" id="sec671">
-    <div class="law-body">
-      <div class="law-header"><span class="law-title">มาตรา 671</span><a href="#dashboard" class="badge">🔝 แดชบอร์ด</a></div>
-      <div class="law-text">"ถ้าผู้รับฝากมีสิทธิจะเอาเงินซึ่งฝากนั้นออกใช้สอยได้ ท่านให้นำบทบัญญัติว่าด้วยการยืมใช้สิ้นเปลืองมาใช้บังคับ"</div>
-      <div class="law-elements"><strong>ผลทางกฎหมาย:</strong> เมื่ออนุญาตให้นำเงินไปใช้ จะแปลงสภาพเป็นสัญญายืมใช้สิ้นเปลือง</div>
-      <div class="cross-ref"><span>เชื่อมโยง:</span><a href="#sec660" class="badge">เทียบ ม.660</a></div>
+  <details class="law-card" id="sec671">
+    <summary class="law-summary">
+      <div class="summary-left">
+        <span class="summary-icon">▶</span>
+        <span class="summary-title">มาตรา 671</span>
+        <span class="summary-desc">— การนำเงินฝากออกใช้สอย</span>
+      </div>
+    </summary>
+    <div class="card-content">
+      <div class="law-body">
+        <div class="law-text">"ถ้าผู้รับฝากมีสิทธิจะเอาเงินซึ่งฝากนั้นออกใช้สอยได้ ท่านให้นำบทบัญญัติว่าด้วยการยืมใช้สิ้นเปลืองมาใช้บังคับ"</div>
+        <div class="law-elements"><strong>ผลทางกฎหมาย:</strong> เมื่ออนุญาตให้นำเงินไปใช้ จะแปลงสภาพเป็นสัญญายืมใช้สิ้นเปลือง</div>
+        <div class="cross-ref"><span>เชื่อมโยง:</span> <a onclick="openAndScroll('sec660')" class="badge">เทียบ ม.660</a></div>
+      </div>
+      <div class="law-notes">
+        <div class="notes-header">📝 บันทึก (ม.671)</div>
+        <textarea class="notes-input" id="note-671"></textarea>
+        <div class="save-status" id="status-671">พร้อมบันทึก</div>
+      </div>
     </div>
-    <div class="law-notes">
-      <div class="notes-header">📝 บันทึก (ม.671)</div>
-      <textarea class="notes-input" id="note-671"></textarea>
-      <div class="save-status" id="status-671">พร้อมบันทึก</div>
-    </div>
-  </div>
+  </details>
 
-  <div class="law-card" id="sec672">
-    <div class="law-body">
-      <div class="law-header"><span class="law-title">มาตรา 672</span><a href="#dashboard" class="badge">🔝 แดชบอร์ด</a></div>
-      <div class="law-text">"ถึงแม้ว่าผู้ฝากจะมิได้อนุญาตให้ผู้รับฝากเอาเงินซึ่งฝากนั้นออกใช้สอยก็ตาม กรรมสิทธิ์ในเงินนั้นก็ย่อมตกเป็นของผู้รับฝาก และผู้รับฝากจำต้องคืนเงินให้ครบจำนวนเท่านั้น ถึงแม้ว่าเงินนั้นจะได้สูญหายไปด้วยเหตุสุดวิสัยก็ตาม"</div>
-      <div class="law-elements"><strong>การโอนกรรมสิทธิ์:</strong> เงินตกเป็นกรรมสิทธิ์ของผู้รับฝาก และต้องรับผิดชอบชดใช้แม้เกิดเหตุสุดวิสัย</div>
-      <div class="cross-ref"><span>เชื่อมโยง:</span><a href="#sec670" class="badge">ม.670</a><a href="#sec660" class="badge">ม.660 เหตุสุดวิสัย</a></div>
+  <details class="law-card" id="sec672">
+    <summary class="law-summary">
+      <div class="summary-left">
+        <span class="summary-icon">▶</span>
+        <span class="summary-title">มาตรา 672</span>
+        <span class="summary-desc">— การโอนกรรมสิทธิ์ในเงินฝากและภัยพิบัติ</span>
+      </div>
+    </summary>
+    <div class="card-content">
+      <div class="law-body">
+        <div class="law-text">"ถึงแม้ว่าผู้ฝากจะมิได้อนุญาตให้ผู้รับฝากเอาเงินซึ่งฝากนั้นออกใช้สอยก็ตาม กรรมสิทธิ์ในเงินนั้นก็ย่อมตกเป็นของผู้รับฝาก และผู้รับฝากจำต้องคืนเงินให้ครบจำนวนเท่านั้น ถึงแม้ว่าเงินนั้นจะได้สูญหายไปด้วยเหตุสุดวิสัยก็ตาม"</div>
+        <div class="law-elements"><strong>การโอนกรรมสิทธิ์:</strong> เงินตกเป็นกรรมสิทธิ์ของผู้รับฝาก ต้องคืนครบแม้เกิดเหตุสุดวิสัย</div>
+        <div class="cross-ref"><span>เชื่อมโยง:</span> <a onclick="openAndScroll('sec670')" class="badge">ม.670</a></div>
+      </div>
+      <div class="law-notes">
+        <div class="notes-header">📝 บันทึก (ม.672)</div>
+        <textarea class="notes-input" id="note-672"></textarea>
+        <div class="save-status" id="status-672">พร้อมบันทึก</div>
+      </div>
     </div>
-    <div class="law-notes">
-      <div class="notes-header">📝 บันทึก (ม.672)</div>
-      <textarea class="notes-input" id="note-672"></textarea>
-      <div class="save-status" id="status-672">พร้อมบันทึก</div>
-    </div>
-  </div>
+  </details>
 
-  <div class="law-card" id="sec673">
-    <div class="law-body">
-      <div class="law-header"><span class="law-title">มาตรา 673</span><a href="#dashboard" class="badge">🔝 แดชบอร์ด</a></div>
-      <div class="law-text">"การคืนเงินซึ่งฝากนั้น ต้องกระทำ ณ ภูมิลำเนาปัจจุบันของผู้รับฝาก เว้นแต่คู่สัญญาจะได้ตกลงกันไว้เป็นอย่างอื่น"</div>
-      <div class="law-elements"><strong>สถานที่ชำระ:</strong> ให้ส่งคืน ณ ภูมิลำเนาปัจจุบันของผู้รับฝาก</div>
-      <div class="cross-ref"><span>เชื่อมโยง:</span><a href="#sec665" class="badge">เทียบ ม.665 ฝากของ</a></div>
+  <details class="law-card" id="sec673">
+    <summary class="law-summary">
+      <div class="summary-left">
+        <span class="summary-icon">▶</span>
+        <span class="summary-title">มาตรา 673</span>
+        <span class="summary-desc">— สถานที่คืนเงินฝาก</span>
+      </div>
+    </summary>
+    <div class="card-content">
+      <div class="law-body">
+        <div class="law-text">"การคืนเงินซึ่งฝากนั้น ต้องกระทำ ณ ภูมิลำเนาปัจจุบันของผู้รับฝาก เว้นแต่คู่สัญญาจะได้ตกลงกันไว้เป็นอย่างอื่น"</div>
+        <div class="law-elements"><strong>สถานที่ชำระ:</strong> ให้ส่งคืน ณ ภูมิลำเนาปัจจุบันของผู้รับฝาก</div>
+        <div class="cross-ref"><span>เชื่อมโยง:</span> <a onclick="openAndScroll('sec665')" class="badge">เทียบ ม.665 ฝากของ</a></div>
+      </div>
+      <div class="law-notes">
+        <div class="notes-header">📝 บันทึก (ม.673)</div>
+        <textarea class="notes-input" id="note-673"></textarea>
+        <div class="save-status" id="status-673">พร้อมบันทึก</div>
+      </div>
     </div>
-    <div class="law-notes">
-      <div class="notes-header">📝 บันทึก (ม.673)</div>
-      <textarea class="notes-input" id="note-673"></textarea>
-      <div class="save-status" id="status-673">พร้อมบันทึก</div>
-    </div>
-  </div>
+  </details>
 
   <!-- ==================== หมวด 3 ==================== -->
   <h2 class="section-title" id="part3">หมวด 3: วิธีเฉพาะสำหรับเจ้าสำนักโรงแรม (มาตรา 674 - 679)</h2>
 
-  <div class="law-card" id="sec674">
-    <div class="law-body">
-      <div class="law-header"><span class="law-title">มาตรา 674</span><a href="#dashboard" class="badge">🔝 แดชบอร์ด</a></div>
-      <div class="law-text">"เจ้าสำนักโรงแรมหรือโฮเต็ล หรือสถานที่อื่นทำนองดั่งนั้น จะต้องรับผิดเพื่อความสูญหายหรือบุบสลายอย่างใด ๆ อันเกิดแก่ทรัพย์สินซึ่งคนเดินทางหรือแขกอาศัยได้พามา"</div>
-      <div class="law-elements"><strong>หลักความรับผิด:</strong> รับผิดเด็ดขาดเพื่อคุ้มครองคนเดินทางที่นำทรัพย์เข้ามาในโรงแรม</div>
-      <div class="cross-ref"><span>เชื่อมโยง:</span><a href="#sec675" class="badge">ม.675 เพดาน</a><a href="#sec676" class="badge">ม.676 ข้อยกเว้น</a></div>
+  <details class="law-card" id="sec674">
+    <summary class="law-summary">
+      <div class="summary-left">
+        <span class="summary-icon">▶</span>
+        <span class="summary-title">มาตรา 674</span>
+        <span class="summary-desc">— ขอบเขตความรับผิดของเจ้าสำนักโรงแรม</span>
+      </div>
+    </summary>
+    <div class="card-content">
+      <div class="law-body">
+        <div class="law-text">"เจ้าสำนักโรงแรมหรือโฮเต็ล หรือสถานที่อื่นทำนองดั่งนั้น จะต้องรับผิดเพื่อความสูญหายหรือบุบสลายอย่างใด ๆ อันเกิดแก่ทรัพย์สินซึ่งคนเดินทางหรือแขกอาศัยได้พามา"</div>
+        <div class="law-elements"><strong>หลักความรับผิด:</strong> รับผิดเด็ดขาดเพื่อคุ้มครองคนเดินทางที่นำทรัพย์เข้ามาในโรงแรม</div>
+        <div class="cross-ref"><span>เชื่อมโยง:</span> <a onclick="openAndScroll('sec675')" class="badge">ม.675 เพดาน</a> <a onclick="openAndScroll('sec676')" class="badge">ม.676 ข้อยกเว้น</a></div>
+      </div>
+      <div class="law-notes">
+        <div class="notes-header">📝 บันทึก (ม.674)</div>
+        <textarea class="notes-input" id="note-674"></textarea>
+        <div class="save-status" id="status-674">พร้อมบันทึก</div>
+      </div>
     </div>
-    <div class="law-notes">
-      <div class="notes-header">📝 บันทึก (ม.674)</div>
-      <textarea class="notes-input" id="note-674"></textarea>
-      <div class="save-status" id="status-674">พร้อมบันทึก</div>
-    </div>
-  </div>
+  </details>
 
-  <div class="law-card" id="sec675">
-    <div class="law-body">
-      <div class="law-header"><span class="law-title">มาตรา 675</span><a href="#dashboard" class="badge">🔝 แดชบอร์ด</a></div>
-      <div class="law-text">"ทรัพย์สินซึ่งนำมาพานั้น ถ้าเป็นเงินตรา ตั๋วเงิน พันธบัตร ใบหุ้น ใบหุ้นกู้ ประทวนสินค้า อัญมณี หรือของมีค่าอื่น ๆ เจ้าสำนักไม่ต้องรับผิดเพื่อความสูญหายหรือบุบสลาย เว้นแต่คนเดินทางหรือแขกอาศัยจะได้ฝากทรัพย์สินมีค่านั้นไว้แก่เจ้าสำนัก และได้บอกราคาแห่งทรัพย์สินนั้นชัดแจ้ง (ว.1)<br><br>แต่เจ้าสำนักไม่ต้องรับผิดเพื่อความสูญหายหรือบุบสลายเกินกว่าจำนวนห้าพันบาท เว้นแต่ความสูญหายหรือบุบสลายนั้นเกิดแต่ความผิดของเจ้าสำนักเอง หรือของคนใช้ของตน (ว.2)"</div>
-      <div class="law-elements"><strong>เกณฑ์เพดาน:</strong> ทรัพย์ทั่วไปจำกัดความรับผิด 5,000 บาท ส่วนของมีค่าต้องฝากและแจ้งราคาไว้</div>
-      <div class="cross-ref"><span>เชื่อมโยง:</span><a href="#sec677" class="badge">ม.677 ข้อสัญญาโมฆะ</a></div>
+  <details class="law-card" id="sec675">
+    <summary class="law-summary">
+      <div class="summary-left">
+        <span class="summary-icon">▶</span>
+        <span class="summary-title">มาตรา 675</span>
+        <span class="summary-desc">— เพดานความรับผิดและทรัพย์สินมีค่า</span>
+      </div>
+    </summary>
+    <div class="card-content">
+      <div class="law-body">
+        <div class="law-text">"ทรัพย์สินซึ่งนำมาพานั้น ถ้าเป็นเงินตรา ตั๋วเงิน พันธบัตร ใบหุ้น ใบหุ้นกู้ ประทวนสินค้า อัญมณี หรือของมีค่าอื่น ๆ เจ้าสำนักไม่ต้องรับผิดเพื่อความสูญหายหรือบุบสลาย เว้นแต่คนเดินทางหรือแขกอาศัยจะได้ฝากทรัพย์สินมีค่านั้นไว้แก่เจ้าสำนัก และได้บอกราคาแห่งทรัพย์สินนั้นชัดแจ้ง (ว.1)<br><br>แต่เจ้าสำนักไม่ต้องรับผิดเพื่อความสูญหายหรือบุบสลายเกินกว่าจำนวนห้าพันบาท เว้นแต่ความสูญหายหรือบุบสลายนั้นเกิดแต่ความผิดของเจ้าสำนักเอง หรือของคนใช้ของตน (ว.2)"</div>
+        <div class="law-elements"><strong>เกณฑ์เพดาน:</strong> ทรัพย์ทั่วไปจำกัดความรับผิด 5,000 บาท ส่วนของมีค่าต้องฝากและแจ้งราคาไว้</div>
+        <div class="cross-ref"><span>เชื่อมโยง:</span> <a onclick="openAndScroll('sec677')" class="badge">ม.677 ป้ายโมฆะ</a></div>
+      </div>
+      <div class="law-notes">
+        <div class="notes-header">📝 บันทึก (ม.675)</div>
+        <textarea class="notes-input" id="note-675"></textarea>
+        <div class="save-status" id="status-675">พร้อมบันทึก</div>
+      </div>
     </div>
-    <div class="law-notes">
-      <div class="notes-header">📝 บันทึก (ม.675)</div>
-      <textarea class="notes-input" id="note-675"></textarea>
-      <div class="save-status" id="status-675">พร้อมบันทึก</div>
-    </div>
-  </div>
+  </details>
 
-  <div class="law-card" id="sec676">
-    <div class="law-body">
-      <div class="law-header"><span class="law-title">มาตรา 676</span><a href="#dashboard" class="badge">🔝 แดชบอร์ด</a></div>
-      <div class="law-text">"ทรัพย์สินซึ่งมิได้ฝากบอกราคาชัดแจ้งนั้น เจ้าสำนักไม่ต้องรับผิดเพื่อความสูญหายหรือบุบสลาย ถ้าพิสูจน์ได้ว่าความสูญหายหรือบุบสลายนั้นเกิดขึ้นแต่:<br>(1) เหตุสุดวิสัย หรือ<br>(2) สภาพแห่งทรัพย์สินนั้นเอง หรือ<br>(3) ความประมาทเลินเล่อของคนเดินทางหรือแขกอาศัยผู้นั้น หรือของบริวารของตน หรือของบุคคลซึ่งตนได้รับรอง"</div>
-      <div class="law-elements"><strong>ข้อยกเว้น:</strong> หลุดพ้นความรับผิดหากเข้า 3 ข้อนี้</div>
-      <div class="cross-ref"><span>เชื่อมโยง:</span><a href="#sec674" class="badge">ม.674</a></div>
+  <details class="law-card" id="sec676">
+    <summary class="law-summary">
+      <div class="summary-left">
+        <span class="summary-icon">▶</span>
+        <span class="summary-title">มาตรา 676</span>
+        <span class="summary-desc">— ข้อยกเว้นความรับผิดของโรงแรม</span>
+      </div>
+    </summary>
+    <div class="card-content">
+      <div class="law-body">
+        <div class="law-text">"ทรัพย์สินซึ่งมิได้ฝากบอกราคาชัดแจ้งนั้น เจ้าสำนักไม่ต้องรับผิดเพื่อความสูญหายหรือบุบสลาย ถ้าพิสูจน์ได้ว่าความสูญหายหรือบุบสลายนั้นเกิดขึ้นแต่:<br>(1) เหตุสุดวิสัย หรือ<br>(2) สภาพแห่งทรัพย์สินนั้นเอง หรือ<br>(3) ความประมาทเลินเล่อของคนเดินทางหรือแขกอาศัยผู้นั้น หรือของบริวารของตน หรือของบุคคลซึ่งตนได้รับรอง"</div>
+        <div class="law-elements"><strong>ข้อยกเว้น:</strong> หลุดพ้นความรับผิดหากเข้า 3 ข้อนี้</div>
+        <div class="cross-ref"><span>เชื่อมโยง:</span> <a onclick="openAndScroll('sec674')" class="badge">ม.674</a></div>
+      </div>
+      <div class="law-notes">
+        <div class="notes-header">📝 บันทึก (ม.676)</div>
+        <textarea class="notes-input" id="note-676"></textarea>
+        <div class="save-status" id="status-676">พร้อมบันทึก</div>
+      </div>
     </div>
-    <div class="law-notes">
-      <div class="notes-header">📝 บันทึก (ม.676)</div>
-      <textarea class="notes-input" id="note-676"></textarea>
-      <div class="save-status" id="status-676">พร้อมบันทึก</div>
-    </div>
-  </div>
+  </details>
 
-  <div class="law-card" id="sec677">
-    <div class="law-body">
-      <div class="law-header"><span class="law-title">มาตรา 677</span><a href="#dashboard" class="badge">🔝 แดชบอร์ด</a></div>
-      <div class="law-text">"คำแจ้งความปิดไว้ในโรงแรม โฮเต็ล หรือสถานที่อื่นทำนองดั่งนี้ เป็นข้อความยกเว้นหรือจำกัดความรับผิดของเจ้าสำนักไซร้ ท่านว่าข้อความนั้นเป็นโมฆะ เว้นแต่คนเดินทางหรือแขกอาศัยจะได้ตกลงยินยอมด้วยชัดแจ้งในการยกเว้นหรือจำกัดความรับผิดดั่งนั้น"</div>
-      <div class="law-elements"><strong>โมฆกรรม:</strong> ป้ายปฏิเสธความรับผิดฝ่ายเดียวไม่มีผลทางกฎหมาย</div>
-      <div class="cross-ref"><span>เชื่อมโยง:</span><a href="#sec675" class="badge">ม.675</a></div>
+  <details class="law-card" id="sec677">
+    <summary class="law-summary">
+      <div class="summary-left">
+        <span class="summary-icon">▶</span>
+        <span class="summary-title">มาตรา 677</span>
+        <span class="summary-desc">— ข้อความปลดเปลื้องความรับผิดตกเป็นโมฆะ</span>
+      </div>
+    </summary>
+    <div class="card-content">
+      <div class="law-body">
+        <div class="law-text">"คำแจ้งความปิดไว้ในโรงแรม โฮเต็ล หรือสถานที่อื่นทำนองดั่งนี้ เป็นข้อความยกเว้นหรือจำกัดความรับผิดของเจ้าสำนักไซร้ ท่านว่าข้อความนั้นเป็นโมฆะ เว้นแต่คนเดินทางหรือแขกอาศัยจะได้ตกลงยินยอมด้วยชัดแจ้งในการยกเว้นหรือจำกัดความรับผิดดั่งนั้น"</div>
+        <div class="law-elements"><strong>โมฆกรรม:</strong> ป้ายปฏิเสธความรับผิดฝ่ายเดียวไม่มีผลทางกฎหมาย</div>
+        <div class="cross-ref"><span>เชื่อมโยง:</span> <a onclick="openAndScroll('sec675')" class="badge">ม.675</a></div>
+      </div>
+      <div class="law-notes">
+        <div class="notes-header">📝 บันทึก (ม.677)</div>
+        <textarea class="notes-input" id="note-677"></textarea>
+        <div class="save-status" id="status-677">พร้อมบันทึก</div>
+      </div>
     </div>
-    <div class="law-notes">
-      <div class="notes-header">📝 บันทึก (ม.677)</div>
-      <textarea class="notes-input" id="note-677"></textarea>
-      <div class="save-status" id="status-677">พร้อมบันทึก</div>
-    </div>
-  </div>
+  </details>
 
-  <div class="law-card" id="sec678">
-    <div class="law-body">
-      <div class="law-header"><span class="law-title">มาตรา 678</span><a href="#dashboard" class="badge">🔝 แดชบอร์ด</a></div>
-      <div class="law-text">"เจ้าสำนักชอบที่จะยึดหน่วงทรัพย์สินของคนเดินทางหรือแขกอาศัยซึ่งพามาไว้ในโรงแรม โฮเต็ล หรือสถานที่ทำนองดั่งนั้นได้ จนกว่าจะได้รับเงินบรรดาที่ค้างชำระแก่ตนเกี่ยวด้วยการพักอาศัยและการอื่น ๆ อันได้ทำให้แก่คนเดินทางหรือแขกอาศัยนั้นตามความประสงค์ของผู้นั้น รวมทั้งการชดใช้เงินที่ได้ออกแทนไปด้วย"</div>
-      <div class="law-elements"><strong>สิทธิยึดหน่วงโรงแรม:</strong> ยึดกระเป๋าและสัมภาระไว้ได้จนกว่าจะจ่ายค่าห้อง/ค่าอาหาร</div>
-      <div class="cross-ref"><span>เชื่อมโยง:</span><a href="#sec667" class="badge">เทียบ ม.667 ฝากทรัพย์</a></div>
+  <details class="law-card" id="sec678">
+    <summary class="law-summary">
+      <div class="summary-left">
+        <span class="summary-icon">▶</span>
+        <span class="summary-title">มาตรา 678</span>
+        <span class="summary-desc">— สิทธิยึดหน่วงของเจ้าสำนักโรงแรม</span>
+      </div>
+    </summary>
+    <div class="card-content">
+      <div class="law-body">
+        <div class="law-text">"เจ้าสำนักชอบที่จะยึดหน่วงทรัพย์สินของคนเดินทางหรือแขกอาศัยซึ่งพามาไว้ในโรงแรม โฮเต็ล หรือสถานที่ทำนองดั่งนั้นได้ จนกว่าจะได้รับเงินบรรดาที่ค้างชำระแก่ตนเกี่ยวด้วยการพักอาศัยและการอื่น ๆ อันได้ทำให้แก่คนเดินทางหรือแขกอาศัยนั้นตามความประสงค์ของผู้นั้น รวมทั้งการชดใช้เงินที่ได้ออกแทนไปด้วย"</div>
+        <div class="law-elements"><strong>สิทธิยึดหน่วงโรงแรม:</strong> ยึดกระเป๋าและสัมภาระไว้ได้จนกว่าจะจ่ายค่าห้อง/ค่าอาหาร</div>
+        <div class="cross-ref"><span>เชื่อมโยง:</span> <a onclick="openAndScroll('sec667')" class="badge">เทียบ ม.667 ฝากทรัพย์</a></div>
+      </div>
+      <div class="law-notes">
+        <div class="notes-header">📝 บันทึก (ม.678)</div>
+        <textarea class="notes-input" id="note-678"></textarea>
+        <div class="save-status" id="status-678">พร้อมบันทึก</div>
+      </div>
     </div>
-    <div class="law-notes">
-      <div class="notes-header">📝 บันทึก (ม.678)</div>
-      <textarea class="notes-input" id="note-678"></textarea>
-      <div class="save-status" id="status-678">พร้อมบันทึก</div>
-    </div>
-  </div>
+  </details>
 
-  <div class="law-card" id="sec679">
-    <div class="law-body">
-      <div class="law-header"><span class="law-title">มาตรา 679</span><a href="#dashboard" class="badge">🔝 แดชบอร์ด</a></div>
-      <div class="law-text">"ในข้อความรับผิดเพื่อทรัพย์สินของคนเดินทางหรือแขกอาศัยสูญหายหรือบุบสลายนั้น ท่านห้ามมิให้ฟ้องเมื่อพ้นกำหนดหกเดือนนับแต่วันที่คนเดินทางหรือแขกอาศัยออกไปจากสถานที่นั้น"</div>
-      <div class="law-elements"><strong>อายุความโรงแรม:</strong> ฟ้องร้องภายใน 6 เดือนนับแต่วัน Check-out ออกไป</div>
-      <div class="cross-ref"><span>เชื่อมโยง:</span><a href="#sec669" class="badge">เทียบ ม.669 ฝากทรัพย์</a></div>
+  <details class="law-card" id="sec679">
+    <summary class="law-summary">
+      <div class="summary-left">
+        <span class="summary-icon">▶</span>
+        <span class="summary-title">มาตรา 679</span>
+        <span class="summary-desc">— อายุความเรียกร้องสำหรับเจ้าสำนักโรงแรม (6 เดือน)</span>
+      </div>
+    </summary>
+    <div class="card-content">
+      <div class="law-body">
+        <div class="law-text">"ในข้อความรับผิดเพื่อทรัพย์สินของคนเดินทางหรือแขกอาศัยสูญหายหรือบุบสลายนั้น ท่านห้ามมิให้ฟ้องเมื่อพ้นกำหนดหกเดือนนับแต่วันที่คนเดินทางหรือแขกอาศัยออกไปจากสถานที่นั้น"</div>
+        <div class="law-elements"><strong>อายุความโรงแรม:</strong> ฟ้องร้องภายใน 6 เดือนนับแต่วัน Check-out ออกไป</div>
+        <div class="cross-ref"><span>เชื่อมโยง:</span> <a onclick="openAndScroll('sec669')" class="badge">เทียบ ม.669 ฝากทรัพย์</a></div>
+      </div>
+      <div class="law-notes">
+        <div class="notes-header">📝 บันทึก (ม.679)</div>
+        <textarea class="notes-input" id="note-679"></textarea>
+        <div class="save-status" id="status-679">พร้อมบันทึก</div>
+      </div>
     </div>
-    <div class="law-notes">
-      <div class="notes-header">📝 บันทึก (ม.679)</div>
-      <textarea class="notes-input" id="note-679"></textarea>
-      <div class="save-status" id="status-679">พร้อมบันทึก</div>
-    </div>
-  </div>
+  </details>
 
 </div>
 
@@ -501,6 +725,24 @@
       });
     });
   });
+
+  // ฟังก์ชันคลิกจาก Dashboard แล้วเปิดการ์ด + เลื่อนลงไปหาอัตโนมัติ
+  function openAndScroll(id) {
+    const target = document.getElementById(id);
+    if (target) {
+      target.open = true;
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+
+  // ฟังก์ชัน ขยายทั้งหมด / พับทั้งหมด
+  let isAllOpen = false;
+  function toggleAllCards() {
+    isAllOpen = !isAllOpen;
+    document.querySelectorAll('details.law-card').forEach(card => {
+      card.open = isAllOpen;
+    });
+  }
 
   // ฟังก์ชันดาวน์โหลดโน้ตออกมาเป็นไฟล์ .txt
   function exportNotes() {
